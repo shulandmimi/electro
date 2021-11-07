@@ -11,7 +11,6 @@ import { message, Row, Col } from 'antd';
 
 export default function ViewElectro() {
     const { rooms, account, type } = useSelector((state: RootState) => state.PositionSettings);
-
     const { data: state, run } = useRequest(async function fetchElectro(account: string, rooms: Position[]) {
         const { code, data, msg } = await fetch_electro(account, rooms);
 

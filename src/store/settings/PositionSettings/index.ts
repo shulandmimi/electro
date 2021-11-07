@@ -5,7 +5,6 @@ import { ViewType, PositionSettingsState, Position } from './interface';
 export { PositionSettingsState };
 
 const localState = JSON.parse(localStorage.getItem('electroSettings') || '{}');
-let uuid = Array.isArray(localState.rooms) ? localStorage.rooms?.reduce((r: number, i: Position) => (i.id > r ? i.id : r), 0) : 0;
 
 const initialState: PositionSettingsState = {
     rooms: [],
@@ -26,8 +25,7 @@ const electroSlice = createSlice({
         },
 
         addPosition(state, { payload: position }: PayloadAction<Position>) {
-            if (state.rooms.some((item) => isEqual(omit(item, 'id'), position))) return;
-            if (isUndefined(position.id)) state.rooms.push({ ...position, id: uuid++ });
+            if (state.rooms.some((item) => item.id === position.id)) return;
             else state.rooms.push({ ...position });
             localStorage.setItem('electroSettings', JSON.stringify(state));
         },
@@ -43,6 +41,6 @@ const electroSlice = createSlice({
     },
 });
 
-export const { syncAll, addPosition, removePosition, setCurrentPosition } = electroSlice.actions;
+export const { syncAll, addPosition, removePosition, setCurrentPosition, setAccount } = electroSlice.actions;
 
 export default electroSlice.reducer;

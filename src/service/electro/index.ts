@@ -16,7 +16,7 @@ export function fetch_electro_building_list(account: string, area: Area) {
 }
 
 /** 校验房间 */
-export function checkRoom(account: string, area: Area, building: Building, room: Room) {
+export function checkRoom(account: string, area: Area, building: Building, room: Room): Promise<RD<Position>> {
     return request.post('/electro/checkRoom', {
         data: {
             account,
@@ -45,7 +45,7 @@ export function fetch_electro<T = Electro[]>(account: string, positions: Omit<Po
 }
 
 async function fetch_electro_common<T>(data: any, type: QueryType) {
-    return request.post<T>('/electro/queryAreaList', {
+    return request.post<T | string>('/electro/queryAreaList', {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             Accept: '',
