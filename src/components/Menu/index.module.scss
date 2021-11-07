@@ -1,0 +1,48 @@
+.root {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 0px;
+    height: 0px;
+}
+
+.hotArea {
+    position: absolute;
+    right: -100px;
+    bottom: -100px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    transition: opacity 1s;
+    background: repeating-radial-gradient(#abcedf, transparent 101px);
+    opacity: 0;
+    &:hover {
+        opacity: 1;
+    }
+
+    &.viewBackground {
+        opacity: 1;
+    }
+}
+
+.menuList {
+    display: none;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 0px;
+    height: 0px;
+}
+
+.visible {
+    display: inline-block;
+}
+
+.menuItem {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+}
