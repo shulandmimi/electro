@@ -75,9 +75,6 @@ jobs:
                   command: |
                       mkdir -p $HOME/.kube
                       echo $KUBECONFIG_DATA | base64 -d > $HOME/.kube/config
-                      cat $HOME/.kube/config
-                      kubectl config view
-                      kubectl get pods
             - kubernetes/update-container-image:
                   container-image-updates: electro-client=$DOCKER_IMAGE_NAME
                   get-rollout-status: true
