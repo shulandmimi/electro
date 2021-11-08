@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { isEqual, isUndefined, omit } from 'lodash';
 import { ViewType, PositionSettingsState, Position } from './interface';
-
-export { PositionSettingsState };
 
 const localState = JSON.parse(localStorage.getItem('electroSettings') || '{}');
 
