@@ -35,11 +35,14 @@ export interface Electro {
 }
 
 /** 查询电量 */
-export function fetch_electro<T = Electro[]>(account: string, positions: Omit<Position, 'id'>[]) {
-    return request.post<RD<T>>('/electro/queryElectro', {
-        data: {
+export function fetch_electro<T = Electro[]>(account: string, positionids: Position['id'][]) {
+    return request.get<RD<T>>('/electro/queryElectro', {
+        params: {
             account,
-            positions,
+            positions: positionids,
+        },
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
     });
 }
