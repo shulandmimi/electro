@@ -2,7 +2,7 @@ import request from 'umi-request';
 
 export const BAHSE_URL = {
     development: 'http://127.0.0.1:12306',
-    production: '',
+    production: 'http://electroapi.wdbke.top',
 }[process.env.NODE_ENV!];
 
 request.extendOptions({
