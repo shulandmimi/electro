@@ -5,7 +5,7 @@ import path from 'path';
 
 const manifestName = 'pwa-manifest.json';
 const NODE_ENV = process.env.NODE_ENV as string;
-
+console.log(NODE_ENV);
 export default defineConfig({
     nodeModulesTransform: {
         type: 'none',
@@ -39,22 +39,20 @@ export default defineConfig({
         react: 'window.React',
         'react-dom': 'window.ReactDOM',
         '@reduxjs/toolkit': 'window.RTK',
-        'react-redux': 'window.Redux',
     },
     scripts: [
         ...(NODE_ENV === 'development'
             ? [
                   'https://unpkg.com/react@17/umd/react.development.js',
                   'https://unpkg.com/react-dom@17/umd/react-dom.development.js',
-                  'https://unpkg.com/@reduxjs/toolkit@1.6.2/dist/redux-toolkit.cjs.development.js',
-                  'https://unpkg.com/redux@4.1.2/dist/redux.js',
+                  'https://unpkg.com/@reduxjs/toolkit@1.6.2/dist/redux-toolkit.umd.js',
               ]
             : [
                   'https://unpkg.com/react@17/umd/react.production.min.js',
                   'https://unpkg.com/react-dom@17/umd/react-dom.production.min.js',
-                  'https://unpkg.com/@reduxjs/toolkit@1.6.2/dist/redux-toolkit.modern.production.min.js',
-                  'https://unpkg.com/redux@4.1.2/dist/redux.min.js',
-              ]),
+                  'https://unpkg.com/@reduxjs/toolkit@1.6.2/dist/redux-toolkit.umd.min.js',
+              ]
+        ).map((item) => ({ src: item, crossorigin: 'crossorigin' })),
     ],
 
     webpack5: {},
