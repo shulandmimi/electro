@@ -5,7 +5,7 @@ const localState = JSON.parse(localStorage.getItem('electroSettings') || '{}');
 
 const initialState: PositionSettingsState = {
     rooms: [],
-    type: ViewType.One,
+    type: ViewType.Multile,
 };
 
 const electroSlice = createSlice({
