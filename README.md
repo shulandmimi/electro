@@ -1,8 +1,8 @@
-# electro 监控电量
+# electro 探测电量
 
 > 某个作业
 
-由 umi 基础构建项目，使用react和react-redux开发项目
+由 umi 基础构建，使用react和react-redux开发项目
 
 ## 功能
 
