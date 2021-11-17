@@ -1,6 +1,7 @@
 import { defineConfig } from 'umi';
 import { InjectManifest } from 'workbox-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
+import path from 'path';
 
 const manifestName = 'pwa-manifest.json';
 const NODE_ENV = process.env.NODE_ENV as string;
@@ -14,6 +15,8 @@ export default defineConfig({
     publicPath: './',
     copy: [`./pwa/${manifestName}`, { from: './pwa/favicon', to: './favicon' }], // 这个需要提供 pwa 需要的 .webmanifest 文件，然后手动将其拷贝到构建之后的目录（dist）下
     links: [{ rel: 'manifest', href: `./${manifestName}` }], // 手动插入 .webmanifest 文件的 link
+    hash: true,
+    chunks: ['app'],
     chainWebpack: (memo) => {
         memo.plugin('workbox').use(InjectManifest, [
             {
@@ -30,14 +33,28 @@ export default defineConfig({
         ]);
     },
 
+    plugins: [path.join(__dirname, './src/plugins/renameUmi.ts')],
+
     externals: {
         react: 'window.React',
         'react-dom': 'window.ReactDOM',
+        '@reduxjs/toolkit': 'window.RTK',
+        'react-redux': 'window.Redux',
     },
     scripts: [
         ...(NODE_ENV === 'development'
-            ? ['https://unpkg.com/react@17/umd/react.development.js', 'https://unpkg.com/react-dom@17/umd/react-dom.development.js']
-            : ['https://unpkg.com/react@17/umd/react.production.min.js', 'https://unpkg.com/react-dom@17/umd/react-dom.production.min.js']),
+            ? [
+                  'https://unpkg.com/react@17/umd/react.development.js',
+                  'https://unpkg.com/react-dom@17/umd/react-dom.development.js',
+                  'https://unpkg.com/@reduxjs/toolkit@1.6.2/dist/redux-toolkit.cjs.development.js',
+                  'https://unpkg.com/redux@4.1.2/dist/redux.js',
+              ]
+            : [
+                  'https://unpkg.com/react@17/umd/react.production.min.js',
+                  'https://unpkg.com/react-dom@17/umd/react-dom.production.min.js',
+                  'https://unpkg.com/@reduxjs/toolkit@1.6.2/dist/redux-toolkit.modern.production.min.js',
+                  'https://unpkg.com/redux@4.1.2/dist/redux.min.js',
+              ]),
     ],
 
     webpack5: {},
