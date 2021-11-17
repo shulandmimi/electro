@@ -1,14 +1,19 @@
+import { useEffect } from 'react';
 import { useRequest } from 'ahooks';
-import { useMount } from 'ahooks';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { message, Row, Col } from 'antd';
 import { fetch_electro } from '@/service/electro/index';
 import style from './index.scss';
 import { Position, ViewType } from '@/store/settings/PositionSettings/interface';
 import ViewElectroDefault from './viewElectroTheme/Default';
 import { RootState } from '@/store/index';
+import { Electro } from '@/service/electro/index';
+import { removePosition } from '@/store/settings/PositionSettings';
+import { useRerender } from '@/hooks';
 
 export default function ViewElectro() {
+    const dispatch = useDispatch();
+    const rerender = useRerender();
     const { rooms, account, type } = useSelector((state: RootState) => state.PositionSettings);
     const { data: state, run } = useRequest(async function fetchElectro(account: string, rooms: Position[]) {
         const { code, data, msg } = await fetch_electro(
@@ -24,11 +29,15 @@ export default function ViewElectro() {
         return data;
     });
 
-    useMount(() => {
+    const deletePositionHandler = (electro: Electro) => {
+        dispatch(removePosition(electro.position));
+    };
+
+    useEffect(() => {
         if (account && rooms && rooms.length) {
             run(account, rooms);
         }
-    });
+    }, [account, rooms]);
 
     function renderElectro() {
         if (!state?.length) return null;
@@ -37,7 +46,7 @@ export default function ViewElectro() {
                 return (
                     <Row className={style.row} gutter={[12, 8]}>
                         <Col className={style.col} span={24}>
-                            <ViewElectroDefault {...state[0]}></ViewElectroDefault>
+                            <ViewElectroDefault onDelete={() => deletePositionHandler(state[0])} {...state[0]}></ViewElectroDefault>
                         </Col>
                     </Row>
                 );
@@ -46,7 +55,7 @@ export default function ViewElectro() {
                     <Row className={style.row} justify="center" gutter={[12, 8]}>
                         {state?.map((item) => (
                             <Col className={style.col} key={item.id} xxl={12} xl={12} lg={24} span={24}>
-                                <ViewElectroDefault {...item}></ViewElectroDefault>
+                                <ViewElectroDefault onDelete={() => deletePositionHandler(item)} {...item}></ViewElectroDefault>
                             </Col>
                         ))}
                     </Row>

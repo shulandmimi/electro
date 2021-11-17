@@ -6,12 +6,12 @@ import { store } from '@/store';
 import App from './App';
 import './index.scss';
 
-if ('serviceWorker' in navigator) {
-    // Use the window load event to keep the page load performant
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js');
-    });
-}
+// if ('serviceWorker' in navigator) {
+//     // Use the window load event to keep the page load performant
+//     window.addEventListener('load', () => {
+//         navigator.serviceWorker.register('./sw.js');
+//     });
+// }
 
 export default function IndexPage() {
     return (

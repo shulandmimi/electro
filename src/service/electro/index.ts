@@ -31,7 +31,7 @@ export interface Electro {
     electro: number;
     id: number;
     createdAt: string;
-    position: Area & Building & Room;
+    position: Position;
 }
 
 /** 查询电量 */
