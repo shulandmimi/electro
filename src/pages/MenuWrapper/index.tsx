@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { SettingOutlined, LoginOutlined } from '@ant-design/icons';
+import { SettingOutlined, PlusOutlined, LoginOutlined } from '@ant-design/icons';
 import Menu, { Item } from '@/components/Menu';
-import { showPosition, showRegister } from '@/store/menu/SettingsModalVisible';
+import { showLogin, showPosition, showRegister } from '@/store/menu/SettingsModalVisible';
 import { showMenu, hideMenu } from '@/store/menu';
 import { RootState } from '@/store/index';
 
@@ -25,7 +25,8 @@ export default function MenuWrap() {
             )}
             menus={[
                 { type: 'settings', icon: <SettingOutlined onClick={() => dispatch(showPosition())} /> },
-                { type: 'register', icon: <LoginOutlined onClick={() => dispatch(showRegister())} /> },
+                { type: 'register', icon: <PlusOutlined onClick={() => dispatch(showRegister())} /> },
+                { type: 'login', icon: <LoginOutlined onClick={() => dispatch(showLogin())} /> },
             ]}
             icon={{ width: 40, height: 40 }}
             margin={[5, 10]}
