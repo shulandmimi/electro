@@ -1,7 +1,7 @@
 import { Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/index';
-import { close } from '@/store/menu/PositionSettingsModal';
+import { closePosition } from '@/store/menu/SettingsModalVisible';
 import Settings from './components/Settings';
 
 export default function DialogSettings() {
@@ -10,7 +10,7 @@ export default function DialogSettings() {
     const settingsDialog = useSelector((state: RootState) => state.PositionSettingsModal);
 
     return (
-        <Modal title="设置" visible={settingsDialog.visible} footer={null} onCancel={() => dispatch(close())}>
+        <Modal title="设置" visible={settingsDialog.positionVisible} footer={null} onCancel={() => dispatch(closePosition())}>
             <Settings />
         </Modal>
     );

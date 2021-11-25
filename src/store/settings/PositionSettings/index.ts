@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ViewType, PositionSettingsState, Position } from './interface';
 
+export { PositionSettingsState };
 const localState = JSON.parse(localStorage.getItem('electroSettings') || '{}');
 
 const initialState: PositionSettingsState = {

@@ -1,11 +1,11 @@
 import MenuWrapper from './MenuWrapper';
 import ViewElectro from './ViewElectro/index';
-import DialogSettings from './Setting';
+import Settings from './MenuWrapper/Settings';
 
 export default function IndexPage() {
     return (
         <>
-            <DialogSettings />
+            <Settings />
             <ViewElectro />
             <MenuWrapper />
         </>

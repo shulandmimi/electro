@@ -1,11 +1,11 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import PositionSettings, { PositionSettingsState } from './settings/PositionSettings';
-import PositionSettingsModal, { PositionSettingsModalState } from './menu/PositionSettingsModal';
+import PositionSettingsModal, { PositionSettingsModalState } from './menu/SettingsModalVisible';
 import Menu, { MenuState } from './menu/index';
 export interface State {
     PositionSettings: PositionSettingsState;
     PositionSettingsModal: PositionSettingsModalState;
-    Menu: MenuState
+    Menu: MenuState;
 }
 const reducer = combineReducers({
     PositionSettings,
