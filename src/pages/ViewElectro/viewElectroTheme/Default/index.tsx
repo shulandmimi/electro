@@ -1,17 +1,20 @@
-import { Card, Tag, Popover, Button } from 'antd';
+import { Card, Tag, Popover, Button, Row, Col } from 'antd';
 import { Electro } from '@/service/electro';
 import { useColor } from '@/hooks';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, MailOutlined, MailTwoTone } from '@ant-design/icons';
+import { hasIn } from 'lodash';
 
-interface ViewElectroItem {
+interface ViewElectroItemProps {
     electro: number;
     id: number;
     createdAt: string;
     position: Electro['position'];
     onDelete: () => void;
+    onSubscribe: () => void;
+    onDeSubsribe: () => void;
 }
 
-export default function ViewElectroItem({ electro = 0, createdAt, position, onDelete }: ViewElectroItem) {
+export default function ViewElectroItem({ electro = 0, createdAt, position, onDelete, onDeSubsribe, onSubscribe }: ViewElectroItemProps) {
     const color = useColor();
     const renderCardHeader = () => {
         return (
@@ -26,22 +29,27 @@ export default function ViewElectroItem({ electro = 0, createdAt, position, onDe
                         {position?.building} {position?.area}
                     </span>
                 </div>
-                <div>
-                    <Popover
-                        content={
-                            <div style={{ width: 200 }}>
-                                <div>你确定要删除该房间吗，确认后该房间将从列表中删除</div>
-                                <div style={{ textAlign: 'right', marginTop: 20 }}>
-                                    <Button type="primary" onClick={onDelete}>
-                                        确定
-                                    </Button>
+                <Row gutter={[10, 0]}>
+                    <Col>
+                        <Popover
+                            content={
+                                <div style={{ width: 200 }}>
+                                    <div>你确定要删除该房间吗，确认后该房间将从列表中删除</div>
+                                    <div style={{ textAlign: 'right', marginTop: 20 }}>
+                                        <Button type="primary" onClick={onDelete}>
+                                            确定
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                    >
-                        <CloseCircleOutlined />
-                    </Popover>
-                </div>
+                            }
+                        >
+                            <CloseCircleOutlined />
+                        </Popover>
+                    </Col>
+                    {hasIn(position, 'mail') ? (
+                        <Col>{position.mail ? <MailTwoTone onClick={onDeSubsribe} /> : <MailOutlined onClick={onSubscribe} />}</Col>
+                    ) : null}
+                </Row>
             </div>
         );
     };

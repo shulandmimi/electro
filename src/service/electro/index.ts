@@ -1,7 +1,7 @@
 import request, { BAHSE_URL } from '@/tools/request';
 import qs from 'query-string';
 import { Area, Building, Room, ResponseArea, ResponseBuilding, QueryType } from './interface';
-import { Position } from '@/store/settings/PositionSettings/interface';
+import { Position, PositionWithMail } from '@/store/settings/PositionSettings/interface';
 
 const QUERY_ID = '0030000000002501';
 
@@ -31,7 +31,7 @@ export interface Electro {
     electro: number;
     id: number;
     createdAt: string;
-    position: Position;
+    position: PositionWithMail;
 }
 
 /** 查询电量 */
@@ -44,6 +44,7 @@ export function fetch_electro<T = Electro[]>(account: string, positionids: Posit
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         },
+        credentials: 'include',
     });
 }
 

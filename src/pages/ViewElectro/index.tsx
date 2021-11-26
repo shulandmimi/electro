@@ -8,6 +8,7 @@ import { Position, ViewType } from '@/store/settings/PositionSettings/interface'
 import ViewElectroDefault from './viewElectroTheme/Default';
 import { RootState } from '@/store/index';
 import { Electro } from '@/service/electro/index';
+import { subscrirbeMail, deSubscribeMail } from '@/service/mail';
 import { removePosition } from '@/store/settings/PositionSettings';
 import { useRerender } from '@/hooks';
 
@@ -33,6 +34,14 @@ export default function ViewElectro() {
         dispatch(removePosition(electro.position));
     };
 
+    const subscribeHandler = (electro: Electro) => {
+        subscrirbeMail(electro.position.id);
+    };
+
+    const deSubscribeHandler = (electro: Electro) => {
+        deSubscribeMail(electro.position.id);
+    };
+
     useEffect(() => {
         if (account && rooms && rooms.length) {
             run(account, rooms);
@@ -46,7 +55,12 @@ export default function ViewElectro() {
                 return (
                     <Row className={style.row} gutter={[12, 8]}>
                         <Col className={style.col} span={24}>
-                            <ViewElectroDefault onDelete={() => deletePositionHandler(state[0])} {...state[0]}></ViewElectroDefault>
+                            <ViewElectroDefault
+                                onSubscribe={() => subscribeHandler(state[0])}
+                                onDeSubsribe={() => deSubscribeHandler(state[0])}
+                                onDelete={() => deletePositionHandler(state[0])}
+                                {...state[0]}
+                            ></ViewElectroDefault>
                         </Col>
                     </Row>
                 );
@@ -55,7 +69,12 @@ export default function ViewElectro() {
                     <Row className={style.row} justify="center" gutter={[12, 8]}>
                         {state?.map((item) => (
                             <Col className={style.col} key={item.id} xxl={12} xl={12} lg={24} span={24}>
-                                <ViewElectroDefault onDelete={() => deletePositionHandler(item)} {...item}></ViewElectroDefault>
+                                <ViewElectroDefault
+                                    onSubscribe={() => subscribeHandler(item)}
+                                    onDeSubsribe={() => deSubscribeHandler(item)}
+                                    onDelete={() => deletePositionHandler(item)}
+                                    {...item}
+                                ></ViewElectroDefault>
                             </Col>
                         ))}
                     </Row>
