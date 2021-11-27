@@ -7,6 +7,7 @@ const initialState: PositionSettingsModalState = {
     positionVisible: false,
     registerVisible: false,
     loginVisible: false,
+    aboutVisible: false,
 };
 
 const SettingsModal = createSlice({
@@ -31,8 +32,14 @@ const SettingsModal = createSlice({
         closeLogin(state) {
             state.loginVisible = false;
         },
+        showAbout(state) {
+            state.aboutVisible = true;
+        },
+        closeAbout(state) {
+            state.aboutVisible = false;
+        },
     },
 });
 
-export const { showPosition, closePosition, showRegister, closeRegister, showLogin, closeLogin } = SettingsModal.actions;
+export const { showPosition, closePosition, showRegister, closeRegister, showLogin, closeLogin, showAbout, closeAbout } = SettingsModal.actions;
 export default SettingsModal.reducer;

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRequest } from 'ahooks';
 import { useSelector, useDispatch } from 'react-redux';
-import { message, Row, Col } from 'antd';
+import { message, Row, Col, Spin } from 'antd';
 import { fetch_electro } from '@/service/electro/index';
 import style from './index.scss';
 import { Position, ViewType } from '@/store/settings/PositionSettings/interface';
@@ -16,7 +16,11 @@ export default function ViewElectro() {
     const dispatch = useDispatch();
     const rerender = useRerender();
     const { rooms, account, type } = useSelector((state: RootState) => state.PositionSettings);
-    const { data: state, run } = useRequest(async function fetchElectro(account: string, rooms: Position[]) {
+    const {
+        data: state,
+        run,
+        loading,
+    } = useRequest(async function fetchElectro(account: string, rooms: Position[]) {
         const { code, data, msg } = await fetch_electro(
             account,
             rooms.map((item) => item.id),
@@ -34,12 +38,24 @@ export default function ViewElectro() {
         dispatch(removePosition(electro.position));
     };
 
-    const subscribeHandler = (electro: Electro) => {
-        subscrirbeMail(electro.position.id);
+    const subscribeHandler = async (electro: Electro) => {
+        const { code, msg } = await subscrirbeMail(electro.position.id);
+        if (code != 200) {
+            message.error(msg || '解除绑定失败');
+            return;
+        }
+        message.success('绑定成功');
+        run(account!, rooms);
     };
 
-    const deSubscribeHandler = (electro: Electro) => {
-        deSubscribeMail(electro.position.id);
+    const deSubscribeHandler = async (electro: Electro) => {
+        const { code, msg } = await deSubscribeMail(electro.position.id);
+        if (code != 200) {
+            message.error(msg || '解除绑定失败');
+            return;
+        }
+        message.success('解除绑定成功');
+        run(account!, rooms);
     };
 
     useEffect(() => {
@@ -83,5 +99,9 @@ export default function ViewElectro() {
                 return null;
         }
     }
-    return <div className={style.root}>{renderElectro()}</div>;
+    return (
+        <div className={style.root}>
+            <Spin spinning={loading}>{renderElectro()}</Spin>
+        </div>
+    );
 }
