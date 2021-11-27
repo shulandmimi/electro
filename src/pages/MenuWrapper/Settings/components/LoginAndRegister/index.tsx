@@ -35,6 +35,7 @@ export default function LoginAndRegister(props: LoginAndRegisterProps) {
                     </Col>
                     <Col span={20}>
                         <Input
+                            type="password"
                             placeholder="请输入密码(最低6位、包含最少一个数字和一个字母)"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

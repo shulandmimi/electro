@@ -2,6 +2,7 @@ import PositionSettings from './PositionSetting';
 import Register from './Register';
 import Login from './Login';
 import About from './About';
+import Tutorial from './Tutorial';
 
 export default function Settings() {
     return (
@@ -10,6 +11,7 @@ export default function Settings() {
             <Register></Register>
             <Login />
             <About />
+            <Tutorial />
         </>
     );
 }

@@ -3,4 +3,5 @@ export interface PositionSettingsModalState {
     registerVisible: boolean;
     loginVisible: boolean;
     aboutVisible: boolean;
+    tutorialVisible: boolean;
 }
