@@ -32,7 +32,8 @@
     "react-dom": "17.x",
     "react-redux": "^7.2.6",
     "umi": "^3.5.20",
-    "umi-request": "^1.4.0"
+    "umi-request": "^1.4.0",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@types/compression-webpack-plugin": "^9.0.0",
