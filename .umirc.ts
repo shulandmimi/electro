@@ -7,6 +7,7 @@ const manifestName = 'pwa-manifest.json';
 const NODE_ENV = process.env.NODE_ENV as string;
 console.log(NODE_ENV);
 export default defineConfig({
+    title: 'electro',
     nodeModulesTransform: {
         type: 'none',
     },
